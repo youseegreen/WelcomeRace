@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Snene/Start.unity
+    guid: 98d38b2c0105bd14c93e97a6de18b2df
+  - enabled: 1
+    path: Assets/Snene/Main.unity
+    guid: bf087fc82ae23c246938c4f62ff543e1
+  - enabled: 1
+    path: Assets/Snene/Result.unity
+    guid: 2210268bf9272de4e8fc36e836a2aa49
