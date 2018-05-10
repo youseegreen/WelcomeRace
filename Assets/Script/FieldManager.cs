@@ -8,16 +8,13 @@ public class FieldManager : MonoBehaviour {
     private const int height = 30;
     private const int width = 6;
     private const int chainHeight = 10;
-    public int CH
-    {
+    public int CH {
         get { return chainHeight; }
     }
-    public int H
-    {
+    public int H {
         get { return height; }
     }
-    public int W
-    {
+    public int W {
         get { return width; }
     }
 
@@ -30,36 +27,30 @@ public class FieldManager : MonoBehaviour {
     public int[,] field = new int[width, height];
     public GameObject[,] obje = new GameObject[width, height];
 
-    private void Start()
-    {
+    private void Start() {
         Player = GameObject.Find("Player");
     }
 
 
     // Update is called once per frame
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
 
         bool judgeChainFrag = true;
 
         //フィールドを最新状態にセット
         //フィールドリセット
-        for (int y = 0; y < H; y++)
-        {
-            for (int x = 0; x < W; x++)
-            {
+        for (int y = 0; y < H; y++) {
+            for (int x = 0; x < W; x++) {
                 field[x, y] = 0;
                 obje[x, y] = null;
             }
         }
 
         //止まってるやつをフィールドにぶち込む
-        for (int i = 0; i < puyoList.Count; i++)
-        {
+        for (int i = 0; i < puyoList.Count; i++) {
             int y = (int)(puyoList[i].GetComponent<PuyoController>().transform.position.y + 0.4);
             int x = (int)(puyoList[i].GetComponent<PuyoController>().transform.position.x + 0.4);
-            if (puyoList[i].GetComponent<PuyoController>().IsMove())
-            {
+            if (puyoList[i].GetComponent<PuyoController>().IsMove()) {
                 if (y < 12) judgeChainFrag = false;
                 else continue;
             }
@@ -74,10 +65,8 @@ public class FieldManager : MonoBehaviour {
 
         //連鎖    ChainCheckスクリプトに委託
         int num, colorNum;
-        if (judgeChainFrag)
-        { 
-            if (GetComponent<ChainCheck>().IsChain(out num, out colorNum))
-            {
+        if (judgeChainFrag) {
+            if (GetComponent<ChainCheck>().IsChain(out num, out colorNum)) {
                 GetComponent<ScoreAndTimer>().AddChain(num, colorNum);
                 GetComponent<StartAndEndGUI>().ResetTimer();
             }
@@ -86,12 +75,10 @@ public class FieldManager : MonoBehaviour {
     }
 
 
-    public void AddBonusPuyo()
-    {
+    public void AddBonusPuyo() {
         int num = -1;
-    
-        while (true)
-        {
+
+        while (true) {
             num = Random.Range(0, puyoList.Count);
             if (puyoList[num].GetComponent<PuyoController>().ColorNum != 0)
                 if (!puyoList[num].GetComponent<PuyoController>().BonusFrag)

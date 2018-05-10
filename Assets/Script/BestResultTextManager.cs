@@ -20,9 +20,10 @@ public class BestResultTextManager : MonoBehaviour {
     }
 
 
-    public void DispMessage(int score, int chain, bool updateFrag)
+    public void DispMessage(string name, int score, int chain, bool updateFrag)
     {
         if (!firstFrag) return;
+        if (name == "guest") return;
         if (updateFrag) bestText.text = "自己ベスト更新！";
         else bestText.text = "自己ベスト";
         scoreChainText.text = "　スコア\n最大連鎖";

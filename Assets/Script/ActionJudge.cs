@@ -13,8 +13,7 @@ public class ActionJudge : MonoBehaviour {
     private int bonusNum = 0;
     public int BonusNum { get { return bonusNum; } }
     private bool enable = false;
-    public bool Frag
-    {
+    public bool Frag {
         set { enable = value; }
         get { return enable; }
     }
@@ -27,11 +26,10 @@ public class ActionJudge : MonoBehaviour {
         AC = GetComponent<AvatarController>();
 
         //はじめは判定起こさない
-       // enabled = false;
+        // enabled = false;
     }
 
-    private int playerX
-    {
+    private int playerX {
         get { return (int)(GetComponent<Transform>().position.x + 0.5); }
     }
 
@@ -53,8 +51,7 @@ public class ActionJudge : MonoBehaviour {
     }
 
 
-    private bool CheckStartPos()
-    {
+    private bool CheckStartPos() {
         if (bone[6].position.y < bone[5].position.y)
             if (bone[11].position.y < bone[10].position.y)
                 if (Mathf.Abs(bone[7].position.z - bone[5].position.z) < 0.2)
@@ -63,15 +60,14 @@ public class ActionJudge : MonoBehaviour {
                             if (bone[15].position.y < bone[14].position.y)
                                 if (Mathf.Abs(bone[14].position.z - bone[15].position.z) < 0.3)
                                     if (Mathf.Abs(bone[18].position.z - bone[19].position.z) < 0.3)
-                                        startPos = true;               
+                                        startPos = true;
         return startPos;
     }
 
 
 
-    private bool IsNeedle()
-    {
-       
+    private bool IsNeedle() {
+
         if (bone[6].position.y < bone[5].position.y) return false;
         if (bone[7].position.y < bone[6].position.y) return false;
         if (bone[8].position.y < bone[7].position.y) return false;
@@ -90,38 +86,33 @@ public class ActionJudge : MonoBehaviour {
         return true;
     }
 
-    private bool IsKick()
-    {
-    
+    private bool IsKick() {
+
         if (Mathf.Abs(bone[14].position.z - bone[15].position.z) > 0.3) { startPos = false; return true; }
         if (Mathf.Abs(bone[18].position.z - bone[19].position.z) > 0.3) { startPos = false; return true; }
         return false;
     }
-   
-    private bool IsPunch()
-    {
+
+    private bool IsPunch() {
         if (Mathf.Abs(bone[10].position.z - bone[11].position.z) > 0.2)
             if (Mathf.Abs(bone[11].position.z - bone[12].position.z) > 0.2)
                 if (Mathf.Abs(bone[10].position.x - bone[11].position.x) < 0.2)
                     if (Mathf.Abs(bone[11].position.x - bone[12].position.x) < 0.2)
                         if (Mathf.Abs(bone[5].position.z - bone[6].position.z) < 0.2)
-                            if (Mathf.Abs(bone[6].position.z - bone[7].position.z) < 0.2)
-                            { startPos = false; return true; }
+                            if (Mathf.Abs(bone[6].position.z - bone[7].position.z) < 0.2) { startPos = false; return true; }
 
 
         if (Mathf.Abs(bone[5].position.z - bone[6].position.z) > 0.2)
             if (Mathf.Abs(bone[6].position.z - bone[7].position.z) > 0.2)
                 if (Mathf.Abs(bone[5].position.x - bone[6].position.x) < 0.2)
                     if (Mathf.Abs(bone[6].position.x - bone[7].position.x) < 0.2)
-                        if (Mathf.Abs(bone[10].position.z - bone[11].position.z) <0.2)
-                            if (Mathf.Abs(bone[11].position.z - bone[12].position.z) < 0.2)
-                            { startPos = false; return true; }
+                        if (Mathf.Abs(bone[10].position.z - bone[11].position.z) < 0.2)
+                            if (Mathf.Abs(bone[11].position.z - bone[12].position.z) < 0.2) { startPos = false; return true; }
 
         return false;
     }
 
-    private bool IsOlga()
-    {
+    private bool IsOlga() {
         if (bone[6].position.y < bone[5].position.y) return false;
         if (bone[7].position.y < bone[6].position.y) return false;
         if (bone[8].position.y < bone[7].position.y) return false;
@@ -138,8 +129,7 @@ public class ActionJudge : MonoBehaviour {
         return true;
     }
 
-    private bool IsWish()
-    {
+    private bool IsWish() {
         if (bone[6].position.y > bone[5].position.y) return false;
         if (bone[6].position.y > bone[7].position.y) return false;
         if (bone[6].position.y > bone[8].position.y) return false;
@@ -150,13 +140,11 @@ public class ActionJudge : MonoBehaviour {
         bool sign = true;
         if (bone[5].position.y > bone[10].position.y) sign = false;
 
-        if (sign)
-        {
+        if (sign) {
             //デフォが右のほうが座標が大きい
             if (bone[8].position.y < bone[13].position.y) return false;
         }
-        else
-        {
+        else {
             if (bone[8].position.y > bone[13].position.y) return false;
         }
         startPos = false;
@@ -164,8 +152,7 @@ public class ActionJudge : MonoBehaviour {
     }
 
 
-    public void AddBonus()
-    {
+    public void AddBonus() {
         bonusNum++;
     }
 

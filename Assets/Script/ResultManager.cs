@@ -58,7 +58,7 @@ public class ResultManager : MonoBehaviour {
         if (time > 5.0)
         {
             GameObject.Find("BestResultTextManager").
-                GetComponent<BestResultTextManager>().DispMessage(hiScore, hiChain, updateFrag);
+                GetComponent<BestResultTextManager>().DispMessage(pName, hiScore, hiChain, updateFrag);
         }
 
 

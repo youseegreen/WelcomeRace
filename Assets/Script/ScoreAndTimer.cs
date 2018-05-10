@@ -15,8 +15,7 @@ public class ScoreAndTimer : MonoBehaviour {
     private int maxChainNum = 0;
     private bool updateFrag = true;
 
-    public bool TimeUpdate
-    {
+    public bool TimeUpdate {
         set { updateFrag = value; }
     }
 
@@ -27,29 +26,27 @@ public class ScoreAndTimer : MonoBehaviour {
 
 
     private bool enable;
-    public bool Frag
-    {
+    public bool Frag {
         set { enable = value; }
         get { return enable; }
     }
 
     // Use this for initialization
-    void Start () {
+    void Start() {
         Frag = false; //はじめはカウントしない
         FM = GetComponent<FieldManager>();
         AJ = FM.Player.GetComponent<ActionJudge>();
     }
-	
-	// Update is called once per frame
-	void FixedUpdate () {
+
+    // Update is called once per frame
+    void FixedUpdate() {
         int dispTime = (int)(gameEndTime - gameTime + 1);
         scoreText.text = "C " + chainNum.ToString()
                     + "  B " + AJ.BonusNum.ToString()
                     + " T " + dispTime.ToString()
                     + " S " + score.ToString();
 
-        if (Frag)
-        {
+        if (Frag) {
             if (updateFrag) gameTime += Time.deltaTime;
             if (updateFrag) chainTime += Time.deltaTime;
             if (chainTime > chainThresholdTime) chainNum = 0;
@@ -60,8 +57,7 @@ public class ScoreAndTimer : MonoBehaviour {
     }
 
 
-    public void AddChain(int num,int colorNum)
-    {
+    public void AddChain(int num, int colorNum) {
         chainNum++;
         if (maxChainNum < chainNum) maxChainNum = chainNum;
         score += chainNum * num;
@@ -70,18 +66,16 @@ public class ScoreAndTimer : MonoBehaviour {
         chainTime = 0;
     }
 
-    public void AddScore(int num = 1)
-    {
+    public void AddScore(int num = 1) {
         if (num < 0) return;
         score += num;
     }
 
-    public void TransmissionData()
-    {
+    public void TransmissionData() {
         GameObject.Find("GameManager").GetComponent<DataMessenger>().Score = score;
         GameObject.Find("GameManager").GetComponent<DataMessenger>().Chain = maxChainNum;
     }
 
 
-  
+
 }
