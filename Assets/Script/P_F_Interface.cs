@@ -8,8 +8,7 @@ public class P_F_Interface : MonoBehaviour {
     private FieldManager FM;
     private ScoreAndTimer SAT;
     private GameObject OlgaObje;    //音楽もここにいれる
-    public AudioClip audioClip;     //   private GameObject WishObje;
-    private AudioSource AS;
+    
 
     public enum ActionName {
         Def, Wish, Olga
@@ -22,8 +21,7 @@ public class P_F_Interface : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        AS = GetComponent<AudioSource>();
-        AS.clip = audioClip;
+        FieldManager.audio = GameObject.Find("AudioObject").GetComponent<AudioManager>();
         FM = GetComponent<FieldManager>();
         SAT = GetComponent<ScoreAndTimer>();
         OlgaObje = GameObject.Find("OlgaImage");
@@ -102,7 +100,7 @@ public class P_F_Interface : MonoBehaviour {
         OlgaObje.GetComponent<Image>().enabled = true;
         SAT.TimeUpdate = false;
         SAT.AddChain(0, 1);     //連鎖数だけ増やす
-        AS.Play();
+        FieldManager.audio.CallBoise("Olga");
         yield return new WaitForSeconds(5.0f);  //10秒待つ
 
         OlgaObje.GetComponent<Image>().enabled = false;

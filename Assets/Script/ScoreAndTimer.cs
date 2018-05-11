@@ -58,6 +58,7 @@ public class ScoreAndTimer : MonoBehaviour {
 
 
     public void AddChain(int num, int colorNum) {
+        FieldManager.audio.CallChain(chainNum);
         chainNum++;
         if (maxChainNum < chainNum) maxChainNum = chainNum;
         score += chainNum * num;

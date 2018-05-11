@@ -21,6 +21,7 @@ public class FieldManager : MonoBehaviour {
     /*他への参照*/
     public GameObject Player;
     public GameObject puyo; //ぷよぷよ
+    public static AudioManager audio;   //音声
 
     /*公開用　変数*/
     public List<GameObject> puyoList;
