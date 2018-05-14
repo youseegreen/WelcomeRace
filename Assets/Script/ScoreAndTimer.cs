@@ -8,9 +8,10 @@ public class ScoreAndTimer : MonoBehaviour {
 
     private int chainNum = 0;
     private float chainTime = 0;
+    private float chainTime2 = 0;
     private const float chainThresholdTime = 5.5f;
     private float gameTime = 0;
-    private const float gameEndTime = 100.0f;
+    private const float gameEndTime = 99.9f;
     private int score = 0;
     private int maxChainNum = 0;
     private bool updateFrag = true;
@@ -19,8 +20,9 @@ public class ScoreAndTimer : MonoBehaviour {
         set { updateFrag = value; }
     }
 
-
+    public Text chainText;
     public Text scoreText;
+    public Text scoreNumText;
     private ActionJudge AJ;
     private FieldManager FM;
 
@@ -41,30 +43,41 @@ public class ScoreAndTimer : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate() {
         int dispTime = (int)(gameEndTime - gameTime + 1);
-        scoreText.text = "C " + chainNum.ToString()
-                    + "  B " + AJ.BonusNum.ToString()
-                    + " T " + dispTime.ToString()
-                    + " S " + score.ToString();
+        scoreText.text = "★：" + AJ.BonusNum.ToString()
+                    + "　 score：    　 time：" + dispTime.ToString();
+        scoreNumText.text = score.ToString();
 
         if (Frag) {
+            //止まってる時でも止まらないタイマー
+            chainTime2 += Time.deltaTime;
+            if (chainTime2 < 1.0f) {
+                chainText.fontSize = (int)(250 + 100 * chainTime2);
+                chainText.color = new Color(0.1f, 0.1f, 0.1f, 0.8f - 0.8f * chainTime2);
+            }
+            if (chainTime2 > 2.0f) chainText.text = "";
+
+
             if (updateFrag) gameTime += Time.deltaTime;
             if (updateFrag) chainTime += Time.deltaTime;
             if (chainTime > chainThresholdTime) chainNum = 0;
-
-            if (gameTime > gameEndTime)
+            if (gameTime > gameEndTime) 
                 GetComponent<StartAndEndGUI>().SetEndFrag();
         }
     }
 
 
     public void AddChain(int num, int colorNum) {
-        FieldManager.audio.CallChain(chainNum);
         chainNum++;
         if (maxChainNum < chainNum) maxChainNum = chainNum;
         score += chainNum * num;
         score += colorNum - 1;
         if ((chainNum % 5 == 0) && (chainNum > 0)) { FM.AddBonusPuyo(); }
+        chainText.text = chainNum.ToString();       //連鎖数の表示
+        chainText.fontSize = 200;
+        chainText.color = new Color(0.1f, 0.1f, 0.1f,0.8f);
+        FieldManager.audio.CallChain(chainNum - 1);    //音鳴らす：連鎖数-1
         chainTime = 0;
+        chainTime2 = 0;
     }
 
     public void AddScore(int num = 1) {

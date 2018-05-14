@@ -83,7 +83,7 @@ public class FieldManager : MonoBehaviour {
             num = Random.Range(0, puyoList.Count);
             if (puyoList[num].GetComponent<PuyoController>().ColorNum != 0)
                 if (!puyoList[num].GetComponent<PuyoController>().BonusFrag)
-                    if (puyoList[num].transform.position.y < CH)
+                    if (puyoList[num].transform.position.y < 3)
                         break;
         }
         puyoList[num].GetComponent<PuyoController>().BonusFrag = true;

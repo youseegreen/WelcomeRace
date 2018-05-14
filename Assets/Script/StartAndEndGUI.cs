@@ -13,17 +13,24 @@ public class StartAndEndGUI : MonoBehaviour {
     private bool endFrag = false;
     public void SetEndFrag() { endFrag = true; }
     private float time;
-
-	// Use this for initialization
-	void Start () {
+    private float time2;
+    // Use this for initialization
+    void Start () {
         FM = GetComponent<FieldManager>();
         time = 0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        if ((firstFrag) && (FM.field[0, 0] == 0)) {
+            time2 += Time.deltaTime;
+            float val = Mathf.Abs(0.5f * Mathf.Sin(time2 * 1.5f));
+            text.color = new Color(val, val, val);
+        }
+
         if ((firstFrag) && (FM.field[0, 0] != 0))
         {
+            text.color = new Color(0f, 0f, 0f,1.0f);
             time += Time.deltaTime;
             int t = (int)(3.9 - time);
             text.text = t.ToString();
@@ -39,6 +46,8 @@ public class StartAndEndGUI : MonoBehaviour {
 
         if (endFrag)
         {
+            text.color = new Color(0.1f, 0.1f, 0.1f, 0.0f);
+            text.fontSize = 250;
             time += Time.deltaTime;
             text.text = "Finish";
             GetComponent<ScoreAndTimer>().Frag = false;
@@ -55,5 +64,4 @@ public class StartAndEndGUI : MonoBehaviour {
     public void ResetTimer() {
         time = 0;
     }
-
 }
