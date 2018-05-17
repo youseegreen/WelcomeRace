@@ -30,7 +30,7 @@ public class ResultManager : MonoBehaviour {
     void Start()
     {
         thankText.text = "";
-
+        GameObject.Find("Player").GetComponent<AvatarController>().mirroredMovement = true;
         messenger = GameObject.Find("GameManager").GetComponent<DataMessenger>();
         pName = messenger.Name;
         score = messenger.Score;
@@ -38,7 +38,8 @@ public class ResultManager : MonoBehaviour {
 
 
         SQL = GetComponent<SQLite3>();
-        SQL.AddDataAndGetHiScore(score, chain, pName, out hiScore, out hiChain,out updateFrag);
+
+        if(pName != "guest")SQL.AddDataAndGetHiScore(score, chain, pName, out hiScore, out hiChain,out updateFrag);
         //トップ3をゲットする
         SQL.GetTop3(out rName,out rScore, out rChain);
     }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PuyoGenerator : MonoBehaviour
 {
     private FieldManager FM;    //フィールドマネージャへの参照
+    private int puyoColorNum;   //モードによって変更する
 
     
     //連鎖チェック用
@@ -14,6 +15,10 @@ public class PuyoGenerator : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        //        if (GameObject.Find("GameManager").GetComponent<DataMessenger>().Mode == "easy") puyoColorNum = 4;
+        //       else puyoColorNum = 5;
+        puyoColorNum = 5;
+
         FM = GetComponent<FieldManager>();
         checkFrag = new bool[FM.W, FM.H];
         connectNum = new int[FM.W, FM.H];
@@ -22,7 +27,7 @@ public class PuyoGenerator : MonoBehaviour
         {
             for (int x = 0; x < FM.W; x++)
             {
-                FM.field[x, y] = Random.Range(1, 6);
+                FM.field[x, y] = Random.Range(1, puyoColorNum + 1);
             }
         }
 
@@ -120,7 +125,7 @@ public class PuyoGenerator : MonoBehaviour
     }
     void ChangeColor(int u, int v, int col)
     {
-        FM.field[u, v] = Random.Range(1, 6);
+        FM.field[u, v] = Random.Range(1, puyoColorNum + 1);
         if ((v + 1) < FM.H)
         {
             if (FM.field[u, v + 1] == col)
@@ -169,7 +174,7 @@ public class PuyoGenerator : MonoBehaviour
         int x = (int)(tf.position.x + 0.2);
         float y = tf.position.y;// / 100;
         GameObject puyo = Instantiate(FM.puyo, new Vector3(x, FM.H + y, 0), new Quaternion(0, 0, 0, 0));
-        int val = Random.Range(1, 6);
+        int val = Random.Range(1, puyoColorNum + 1);
         if (val == 1) puyo.tag = "Red";
         else if (val == 2) puyo.tag = "Green";
         else if (val == 3) puyo.tag = "Blue";
