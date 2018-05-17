@@ -8,6 +8,8 @@ public class DataMessenger : MonoBehaviour
     int score;
     int chain;
     string userName;
+    string mode;
+
     public int Score
     {
         get { return score; }
@@ -23,9 +25,14 @@ public class DataMessenger : MonoBehaviour
         get { return userName; }
         set { userName = value; }
     }
+    public string Mode {
+        get { return mode; }
+        set { mode = value; }
+    }
+
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         DontDestroyOnLoad(this);
     }

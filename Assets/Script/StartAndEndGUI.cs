@@ -46,7 +46,7 @@ public class StartAndEndGUI : MonoBehaviour {
 
         if (endFrag)
         {
-            text.color = new Color(0.1f, 0.1f, 0.1f, 0.0f);
+            text.color = new Color(0.1f, 0.1f, 0.1f, 0.8f);
             text.fontSize = 250;
             time += Time.deltaTime;
             text.text = "Finish";

@@ -11,7 +11,7 @@ public class ScoreAndTimer : MonoBehaviour {
     private float chainTime2 = 0;
     private const float chainThresholdTime = 5.5f;
     private float gameTime = 0;
-    private const float gameEndTime = 99.9f;
+    private const float gameEndTime = 9.9f;
     private int score = 0;
     private int maxChainNum = 0;
     private bool updateFrag = true;
@@ -47,15 +47,17 @@ public class ScoreAndTimer : MonoBehaviour {
                     + "　 score：    　 time：" + dispTime.ToString();
         scoreNumText.text = score.ToString();
 
-        if (Frag) {
-            //止まってる時でも止まらないタイマー
-            chainTime2 += Time.deltaTime;
-            if (chainTime2 < 1.0f) {
-                chainText.fontSize = (int)(250 + 100 * chainTime2);
-                chainText.color = new Color(0.1f, 0.1f, 0.1f, 0.8f - 0.8f * chainTime2);
-            }
-            if (chainTime2 > 2.0f) chainText.text = "";
+        //止まってる時でも止まらないタイマー
+        chainTime2 += Time.deltaTime;
+        if (chainTime2 < 1.0f) {
+            chainText.fontSize = (int)(250.0f + 100.0f * chainTime2);
+            chainText.color = new Color(0.1f, 0.1f, 0.1f, 0.8f - 0.8f * chainTime2);
+        }
 
+
+
+        if (chainTime2 > 2.0f) chainText.text = "";
+        if (Frag) {
 
             if (updateFrag) gameTime += Time.deltaTime;
             if (updateFrag) chainTime += Time.deltaTime;
@@ -89,7 +91,5 @@ public class ScoreAndTimer : MonoBehaviour {
         GameObject.Find("GameManager").GetComponent<DataMessenger>().Score = score;
         GameObject.Find("GameManager").GetComponent<DataMessenger>().Chain = maxChainNum;
     }
-
-
 
 }

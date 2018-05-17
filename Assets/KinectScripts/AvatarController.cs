@@ -237,26 +237,24 @@ public class AvatarController : MonoBehaviour
 	protected void TransformBone(uint userId, KinectWrapper.NuiSkeletonPositionIndex joint, int boneIndex, bool flip)
     {
 		Transform boneTransform = bones[boneIndex]; //unityちゃんのボーンの位置とか入れる
-		if(boneTransform == null || kinectManager == null)  //ボーンなかったりkinectついてなかったらパス
+        if (boneTransform == null || kinectManager == null)  //ボーンなかったりkinectついてなかったらパス
 			return;
 		
 		int iJoint = (int)joint;    //関節数をいれる　　変換できんかったら－なるんかな？
 		if(iJoint < 0)
 			return;
-		
+
 
         /*ここからメイン*/
-		// Get Kinect joint orientation
-
         //ここでユーザーのある関節の角度ゲットしてる?
-		Quaternion jointRotation = kinectManager.GetJointOrientation(userId, iJoint, flip);
+        Quaternion jointRotation = kinectManager.GetJointOrientation(userId, iJoint, flip);
         //取得できなかったらreturn
 		if(jointRotation == Quaternion.identity)
 			return;
         //ここでユーザーのさっきの情報使ってユーザーの回転角度ゲットしてる
         // Smoothly transition to the new rotation
         Quaternion newRotation = Kinect2AvatarRot(jointRotation, boneIndex);
-		
+
         //前のボーンから今のボーンに移るまでの補完方法　smoothFactorが0以外なら計算時間かかるけどスムーズに動く
 		if(smoothFactor != 0f)
         	boneTransform.rotation = Quaternion.Slerp(boneTransform.rotation, newRotation, smoothFactor * Time.deltaTime);
@@ -313,23 +311,22 @@ public class AvatarController : MonoBehaviour
 	// Only pulls positional, not rotational.
 	protected void MoveAvatar(uint UserID)
 	{
-		if(bodyRoot == null || kinectManager == null)   //bodyのTransformの親元
+        if (bodyRoot == null || kinectManager == null)   //bodyのTransformの親元
 			return;
         //キネクトがUserIDをトラッキングできていなければパス
-		if(!kinectManager.IsJointTracked(UserID, (int)KinectWrapper.NuiSkeletonPositionIndex.HipCenter))
+        if (!kinectManager.IsJointTracked(UserID, (int)KinectWrapper.NuiSkeletonPositionIndex.HipCenter))
 			return;
-		
+
         /*transにUserIDの人の座標をいれている*/
         // Get the position of the body and store it.
-		Vector3 trans = kinectManager.GetUserPosition(UserID);
-
+        Vector3 trans = kinectManager.GetUserPosition(UserID);
 
 
         /*一回目だけキャリブレーションしてる*/
         /*xyzOffsetでunity上での初期座標をゲットしている*/
         /*多分kinectの座標が数学の座標と同じで（画面左ならー）moveRateは実空間とunity空間の倍率になってる*/
-		// If this is the first time we're moving the avatar, set the offset. Otherwise ignore it.
-		if (!offsetCalibrated)
+        // If this is the first time we're moving the avatar, set the offset. Otherwise ignore it.
+        if (!offsetCalibrated)
 		{
 			offsetCalibrated = true;
 			
@@ -365,10 +362,11 @@ public class AvatarController : MonoBehaviour
 		Vector3 targetPos = Kinect2AvatarPos(trans, verticalMovement);
 
         //人の位置をだいたいここで動かす　smoothFactorあれば補正しながら動かす
-		if(smoothFactor != 0f)
-			bodyRoot.localPosition = Vector3.Lerp(bodyRoot.localPosition, targetPos, smoothFactor * Time.deltaTime);
-		else
-			bodyRoot.localPosition = targetPos;
+        if (smoothFactor != 0f) {
+            bodyRoot.localPosition = Vector3.Lerp(bodyRoot.localPosition, targetPos, smoothFactor * Time.deltaTime);
+        }
+        else
+            bodyRoot.localPosition = targetPos;
 
         //bodyRootがunity上での位置なのか　kinect上での位置なのか　調べていけ  多分unity上かな？
         /*trans：kinect空間　　targetPos bodyRoot：unity空間　　と思っている　あってる？*/
@@ -391,13 +389,12 @@ public class AvatarController : MonoBehaviour
 		
 		// take model transform as body root
 		bodyRoot = transform;   //bodyRootはunity世界座標
-		
-
+        
         //キャラのボーンをとる
-		// get bone transforms from the animator component
-		var animatorComponent = GetComponent<Animator>();       //animatorComponenでunityちゃんの情報パクってくる
-		
-		for (int boneIndex = 0; boneIndex < bones.Length; boneIndex++)
+        // get bone transforms from the animator component
+        var animatorComponent = GetComponent<Animator>();       //animatorComponenでunityちゃんの情報パクってくる
+
+        for (int boneIndex = 0; boneIndex < bones.Length; boneIndex++)
 		{
 			if (!boneIndex2MecanimMap.ContainsKey(boneIndex)) 
 				continue;

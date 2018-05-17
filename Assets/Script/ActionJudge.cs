@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;//シーンマネジメントを有効にする
 
 public class ActionJudge : MonoBehaviour {
 
@@ -11,22 +12,40 @@ public class ActionJudge : MonoBehaviour {
     private static bool startPos = true;
     private Transform[] bone = new Transform[22];
     private int bonusNum = 0;
-    public int BonusNum { get { return bonusNum; } }
+    private bool startPose = false;
+    public bool StartPose {
+        set { startPose = value; }
+        get { return startPose; }
+    }
     private bool enable = false;
     public bool Frag {
         set { enable = value; }
         get { return enable; }
     }
+    public int BonusNum { get { return bonusNum; } }
+   
 
 
     // Use this for initialization
     void Start() {
-        FC = GameObject.Find("FieldController");
-        PFI = FC.GetComponent<P_F_Interface>();
+        DontDestroyOnLoad(GameObject.Find("parent"));
+//        FC = GameObject.Find("FieldController");
+//        PFI = FC.GetComponent<P_F_Interface>();
         AC = GetComponent<AvatarController>();
 
         //はじめは判定起こさない
         // enabled = false;
+    }
+
+    public void GetMainSceneObject() {
+        FC = GameObject.Find("FieldController");
+        PFI = FC.GetComponent<P_F_Interface>();
+        enable = false;
+    }
+    public void GetStartSceneObject() {
+        startPose = false;
+        FC = null;
+        PFI = null;
     }
 
     private int playerX {
@@ -35,19 +54,25 @@ public class ActionJudge : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (!Frag) return;
-
         /*全部ACつけるんめんどいしコピっとく*/
         for (int i = 0; i < 22; i++) bone[i] = AC.Bones[i];
 
-        if (!CheckStartPos()) return;
+        /*スタートシーンだけでの処理  OlgaならStartPoseをtrue*/
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Start")) {
+            if (!startPose && IsOlga()) startPose = true;
+        }
 
-        //技確認の順番気を付けていけ
-        if (IsOlga() && bonusNum > 0) { PFI.SetAction(playerX, 0, P_F_Interface.ActionName.Olga); bonusNum--; }
-        if (IsWish() && bonusNum > 0) { PFI.SetAction(playerX, 0, P_F_Interface.ActionName.Wish); bonusNum--; }
-        if (IsNeedle()) PFI.SetAction(playerX, 2);
-        if (IsKick()) PFI.SetAction(playerX, 0);
-        if (IsPunch()) PFI.SetAction(playerX, 1);
+        /*メインシーンだけでの処理（ぷよを消すように依頼）*/
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Main")) {
+            if (!Frag) return;
+            if (!CheckStartPos()) return;
+            //技確認の順番気を付けていけ
+            if (IsOlga() && bonusNum > 0) { PFI.SetAction(playerX, 0, P_F_Interface.ActionName.Olga); bonusNum--; }
+            if (IsWish() && bonusNum > 0) { PFI.SetAction(playerX, 0, P_F_Interface.ActionName.Wish); bonusNum--; }
+            if (IsNeedle()) PFI.SetAction(playerX, 2);
+            if (IsKick()) PFI.SetAction(playerX, 0);
+            if (IsPunch()) PFI.SetAction(playerX, 1);
+        }
     }
 
 
@@ -122,8 +147,6 @@ public class ActionJudge : MonoBehaviour {
         if (bone[12].position.y > bone[11].position.y) return false;
         if (bone[13].position.y > bone[12].position.y) return false;
         if (bone[13].position.y > bone[3].position.y) return false;
-
-
 
         startPos = false;
         return true;

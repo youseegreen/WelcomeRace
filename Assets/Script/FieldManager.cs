@@ -30,6 +30,7 @@ public class FieldManager : MonoBehaviour {
 
     private void Start() {
         Player = GameObject.Find("Player");
+        Player.GetComponent<ActionJudge>().GetMainSceneObject();
     }
 
 

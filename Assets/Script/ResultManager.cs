@@ -75,7 +75,7 @@ public class ResultManager : MonoBehaviour {
 
 
         //人が消えたらスタートに戻す
-        if ((GetComponent<KinectManager>().GetPlayer1ID() == 0)&&(time > 12.0))
+        if ((GameObject.Find("GameManager").GetComponent<KinectManager>().GetPlayer1ID() == 0)&&(time > 12.0))
         {
         //    GetComponent<SQLite3>().SearchName();
             SceneManager.LoadScene("Start");//Mainシーンをロードする
