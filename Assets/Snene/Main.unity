@@ -2986,16 +2986,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   olga: {fileID: 8300000, guid: 4e7a9be49e03f8f4aa3863e505b37024, type: 3}
-  wish: {fileID: 0}
+  wish: {fileID: 8300000, guid: fafdf1d37dfa52b4c85265b0bc889cda, type: 3}
   bgm: {fileID: 8300000, guid: 2a163ce19df7115459d013cd82cfbe8d, type: 3}
   chain:
   - {fileID: 8300000, guid: c9573735cc9d2b7408a7f159d26da54e, type: 3}
   - {fileID: 8300000, guid: c9573735cc9d2b7408a7f159d26da54e, type: 3}
-  - {fileID: 8300000, guid: c9573735cc9d2b7408a7f159d26da54e, type: 3}
-  - {fileID: 8300000, guid: c9573735cc9d2b7408a7f159d26da54e, type: 3}
-  - {fileID: 8300000, guid: c9573735cc9d2b7408a7f159d26da54e, type: 3}
-  - {fileID: 8300000, guid: c9573735cc9d2b7408a7f159d26da54e, type: 3}
-  - {fileID: 8300000, guid: c9573735cc9d2b7408a7f159d26da54e, type: 3}
+  - {fileID: 8300000, guid: 5f8b603572b9f324cb067c9d622affca, type: 3}
+  - {fileID: 8300000, guid: a99a6822895c8294b8e08550a51f8cb3, type: 3}
+  - {fileID: 8300000, guid: dd7f134da50d38642a4eee9967cc7784, type: 3}
+  - {fileID: 8300000, guid: 857e1a00842cb384a9bf8de26e356cb1, type: 3}
+  - {fileID: 8300000, guid: 70cd016444965564a9f0f7fe4c61be9f, type: 3}
+  - {fileID: 8300000, guid: 2a53212c752670c439da795927e834ec, type: 3}
 --- !u!4 &2101042647
 Transform:
   m_ObjectHideFlags: 0

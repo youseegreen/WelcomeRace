@@ -52,7 +52,7 @@ public class P_F_Interface : MonoBehaviour {
 
             if (input.name == ActionName.Wish)   //ウィッシュ　ある色全部消す
             {
-                //                StartCoroutine(DispWish());
+                StartCoroutine(DispWish());
 
                 int[] counter = new int[5];
                 for (int i = 0; i < 5; i++) counter[i] = 0;
@@ -110,6 +110,7 @@ public class P_F_Interface : MonoBehaviour {
 
     private IEnumerator DispWish() {
         //       WishObje.GetComponent<Image>().enabled = true;
+        FieldManager.audio.CallBoise("Wish");
         yield return new WaitForSeconds(1.0f);  //10秒待つ
                                                 //        WishObje.GetComponent<Image>().enabled = false;
     }

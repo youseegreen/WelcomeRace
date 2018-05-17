@@ -35,7 +35,7 @@ public class AudioManager : MonoBehaviour {
     }
 
     public void CallChain(int num) {
-        if (num > 6) num = 6;
+        if (num > 7) num = 7;
         chainSource.clip = chain[num];
         chainSource.Play();
     }
