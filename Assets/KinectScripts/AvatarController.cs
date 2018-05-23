@@ -361,6 +361,10 @@ public class AvatarController : MonoBehaviour
 		// Smoothly transition to the new position
 		Vector3 targetPos = Kinect2AvatarPos(trans, verticalMovement);
 
+        //y座標は固定
+        targetPos.y = 0.0f;
+
+
         //人の位置をだいたいここで動かす　smoothFactorあれば補正しながら動かす
         if (smoothFactor != 0f) {
             bodyRoot.localPosition = Vector3.Lerp(bodyRoot.localPosition, targetPos, smoothFactor * Time.deltaTime);

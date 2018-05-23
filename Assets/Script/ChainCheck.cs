@@ -12,6 +12,10 @@ public class ChainCheck : MonoBehaviour {
     private int[,] connectNum;
     private bool[] colorFrag = new bool[5];
     private int vanishNum;
+    private int needNum = 4;
+    public int NeedNum {
+        set { needNum = value; }
+    }
 
     void Start() {
         FM = GetComponent<FieldManager>();
@@ -35,7 +39,7 @@ public class ChainCheck : MonoBehaviour {
 
         for (int y = 0; y < FM.CH; y++) {
             for (int x = 0; x < FM.W; x++) {
-                if ((connectNum[x, y] > 3) && (FM.field[x, y] != 0)) {
+                if ((connectNum[x, y] >= needNum) && (FM.field[x, y] != 0)) {
                     chainFrag = true;
                     colorFrag[FM.field[x, y] - 1] = true;
                     ChainVanish(x, y, FM.field[x, y]);

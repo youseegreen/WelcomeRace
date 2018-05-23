@@ -9,6 +9,7 @@ public class DataMessenger : MonoBehaviour
     int chain;
     string userName;
     string mode;
+    int playTimes;
 
     public int Score
     {
@@ -29,11 +30,15 @@ public class DataMessenger : MonoBehaviour
         get { return mode; }
         set { mode = value; }
     }
-
+    public int PlayTimes {
+        get { return playTimes; }
+        set { playTimes = value; }
+    }
 
     // Use this for initialization
     void Awake()
     {
+        playTimes = 0;
         DontDestroyOnLoad(this);
     }
 

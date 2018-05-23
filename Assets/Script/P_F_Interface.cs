@@ -101,7 +101,7 @@ public class P_F_Interface : MonoBehaviour {
         SAT.TimeUpdate = false;
         SAT.AddChain(0, 1);     //連鎖数だけ増やす
         FieldManager.audio.CallBoise("Olga");
-        yield return new WaitForSeconds(5.0f);  //10秒待つ
+        yield return new WaitForSeconds(10.0f);  //10秒待つ
 
         OlgaObje.GetComponent<Image>().enabled = false;
         SAT.TimeUpdate = true;

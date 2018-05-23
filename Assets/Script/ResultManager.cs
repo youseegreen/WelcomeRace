@@ -32,6 +32,7 @@ public class ResultManager : MonoBehaviour {
         thankText.text = "";
         GameObject.Find("Player").GetComponent<AvatarController>().mirroredMovement = true;
         messenger = GameObject.Find("GameManager").GetComponent<DataMessenger>();
+        messenger.PlayTimes += messenger.PlayTimes + 1;
         pName = messenger.Name;
         score = messenger.Score;
         chain = messenger.Chain;
